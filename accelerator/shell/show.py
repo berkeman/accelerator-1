@@ -49,8 +49,12 @@ def main(argv, cfg):
 			data = importlib.import_module(package + '.' + name)
 			description = getattr(data, 'description', '')
 			if description:
-				description = description.split('\n')[0]
-			v.append((name, description))
+				description = description.split('\n')
+				while not description[0]:
+					description.pop(0)
+				while not description[-1]:
+					description.pop(-1)
+			v.append((name, '\n'.join(description)))
 		if v:
 			print(package + ':')
 			maxlen = max(len(x[0]) for x in v)
