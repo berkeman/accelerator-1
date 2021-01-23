@@ -47,14 +47,8 @@ def main(argv, cfg):
 		for item in sorted(glob(join(path + '/build*.py'))):
 			name = item[:-3].rsplit('/', 1)[1]
 			data = importlib.import_module(package + '.' + name)
-			description = getattr(data, 'description', '')
-			if description:
-				description = description.split('\n')
-				while not description[0]:
-					description.pop(0)
-				while not description[-1]:
-					description.pop(-1)
-			v.append((name, '\n'.join(description)))
+			description = getattr(data, 'description', '').strip('\n').rstrip('\n')
+			v.append((name, description))
 		if v:
 			print(package + ':')
 			maxlen = max(len(x[0]) for x in v)
