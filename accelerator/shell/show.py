@@ -48,6 +48,7 @@ def main(argv, cfg):
 			name = item[:-3].rsplit('/', 1)[1]
 			data = importlib.import_module(package + '.' + name)
 			description = getattr(data, 'description', '').strip('\n').rstrip('\n')
+			description = '\n# '.join(description.split('\n'))
 			v.append((name, description))
 		if v:
 			print(package + ':')
